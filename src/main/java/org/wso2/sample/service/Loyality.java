@@ -45,6 +45,9 @@ public class Loyality {
     @Produces("application/json")
     public Response get(@PathParam("user") String user) {
         System.out.println("GET invoked");
+        if (!store.containsKey(user)) {
+            store.put(user, new PointBean(user, 0));
+        }
         PointBean obj = store.get(user);
         String jsonString = gson.toJson(obj);
         return Response.status(Response.Status.OK).entity(jsonString).build();
